@@ -8,5 +8,22 @@
     "32": "icon/icon.png",
     "48": "icon/icon.png",
     "128": "icon/icon.png"
-  }
+  },
+  "background.service_worker": {
+    "page": "pages/background.html"
+  },
+  "content_scripts": [
+    {
+      "js": ["src/load_core.mjs"],
+      "css": ["src/core.css"],
+      "matches": ["<all_urls>"],
+      "run_at": "document_idle"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["src/*"],
+      "matches": ["<all_urls>"]
+    }
+  ]
 }
