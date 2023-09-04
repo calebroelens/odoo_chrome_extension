@@ -4,17 +4,9 @@
   "description": "A extension that has a more extensive debugging",
   "version": "1.0",
   "icons": {
-    "16": "images/icon.png",
-    "32": "images/icon.png",
-    "48": "images/icon.png",
-    "128": "images/icon.png"
-  },
-  "content_scripts": [
-    {
-      "js": ["scripts/additional_apps.js"],
-      "matches": [
-        "https://*/web*"
-      ]
-    }
-  ]
+    "16": "icon/icon.png",
+    "32": "icon/icon.png",
+    "48": "icon/icon.png",
+    "128": "icon/icon.png"
+  }
 }
