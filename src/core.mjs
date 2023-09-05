@@ -1,8 +1,11 @@
-import {createFloatingDebugButton} from "./controls/floating_debug_button.mjs";
 import {isOdooSession} from "./odoo/session.mjs";
+import {OdooWindow} from "./odoo/window.mjs";
+import {OdooInspector} from "./controls/inspector.mjs";
+import {Popup} from "./odoo/popup.js";
 
 
 let setupWindowObjectInjector = () => {
+    /* Load script in any page */
     let injector_script = document.createElement("script");
     injector_script.src = chrome.runtime.getURL("src/injector.js");
     injector_script.onload = () => {};
@@ -13,18 +16,15 @@ let setupWindowObjectInjector = () => {
 let toggleDebug = () => {
     // Setup injector
     if(!window.timeoutDebug){
-        if(document.querySelector(".debug_float")){
-            document.querySelector(".debug_float").remove();
-            document.dispatchEvent(new CustomEvent('odoo_change_title', {detail: 'Debugger disabled'}));
+        window.odoo_extensive_debugging_enabled = !window.odoo_extensive_debugging_enabled
+        if(!window.odoo_extensive_debugging_enabled){
+            OdooWindow.changeWindowTitle("Debugger disabled");
+            OdooInspector.removeInspectorBar(document);
         }
         else {
-            document.dispatchEvent(new CustomEvent('odoo_change_title', {detail: 'Debugger enabled'}));
-            let body = document.getElementsByTagName("body")[0];
-            body.appendChild(
-                createFloatingDebugButton(
-                    document
-                )
-            );
+            OdooWindow.changeWindowTitle("Debugger enabled");
+            OdooInspector.createInspectorBar(document);
+            Popup.showWarning("Odoo inspector", "Javascript code successfully injected!");
         }
 
         window.timeoutDebug = true;
@@ -43,6 +43,10 @@ export async function run(){
             toggleDebug();
         }
     })
+
+    document.addEventListener("odoo_loaded", (ev) => {
+        window.allow_debugger = ev.detail;
+    });
 }
 
 

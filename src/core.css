@@ -1,18 +1,28 @@
-.debug_float{
-    position:fixed;
-    width:60px;
-    height:60px;
-    bottom:40px;
-    right:40px;
-    background-color:#0C9;
-    color:#FFF;
-    border-radius:50px;
-    text-align:center;
-    box-shadow: 2px 2px 3px #999;
-    z-index: 99999;
+.odoo_debug_float_inspector_bar-bar {
+    padding: 10px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: #333333;
+    color: #ffffff;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
+    box-sizing: border-box;
+    height: 5vh;
 }
 
-.my_debug_float{
-    margin-top: 16px;
-    z-index: 99999;
+.odoo_debug_float_inspector_bar__content {
+    max-width: 500px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+}
+
+.odoo_debug_float_inspector_bar__content > * {
+    display: flex;
+    align-items: center;
+}
+
+.odoo_debug_float_inspector_bar__text {
+    padding-right: 10px;
 }
