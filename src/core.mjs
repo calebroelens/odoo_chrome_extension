@@ -2,6 +2,7 @@ import {isOdooSession} from "./odoo/session.mjs";
 import {OdooWindow} from "./odoo/window.mjs";
 import {OdooInspector} from "./controls/inspector.mjs";
 import {Popup} from "./odoo/popup.js";
+import { Notification} from "./odoo/notification.js";
 
 
 let setupWindowObjectInjector = () => {
@@ -24,7 +25,7 @@ let toggleDebug = () => {
         else {
             OdooWindow.changeWindowTitle("Debugger enabled");
             OdooInspector.createInspectorBar(document);
-            Popup.showWarning("Odoo inspector", "Javascript code successfully injected!");
+            Notification.showNotification({'title': "Odoo Extensive Debugging", "message": "Patches have been loaded!", "type": "success"});
         }
 
         window.timeoutDebug = true;
