@@ -9,8 +9,16 @@
     "48": "icon/icon.png",
     "128": "icon/icon.png"
   },
-  "background.service_worker": {
-    "page": "pages/background.html"
+  "commands": {
+    "action_toggle_debug": {
+      "suggested_key": {
+        "default": "Ctrl+I"
+      },
+      "description": "Toggle Debugger"
+    }
+  },
+  "background": {
+    "service_worker": "src/background_worker.js"
   },
   "content_scripts": [
     {
@@ -25,5 +33,9 @@
       "resources": ["src/*"],
       "matches": ["<all_urls>"]
     }
+  ],
+  "permissions": [
+    "activeTab",
+    "tabs"
   ]
 }
