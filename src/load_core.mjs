@@ -1,10 +1,24 @@
 
-let load_core = async () => {
-    /* Load EJS Core */
-    const src = chrome.runtime.getURL('src/core.mjs');
-    const contentScript = await import(src);
-    contentScript.run();
+const RUN_SCRIPTS = [
+    'src/core.mjs'
+];
+
+let importContentScript = async (url) => {
+    const src = chrome.runtime.getURL("src/core.mjs");
+    return await import(src);
 }
-load_core().then(() => {
-    console.log("Run script started");
+
+let init = async () => {
+    for(let script of RUN_SCRIPTS){
+        await importContentScript(script).then(
+            (src) => {
+                console.log(`[OED] Script ${script} loaded.`);
+                src.run();
+            }
+        );
+    }
+}
+
+init().then(() => {
+    console.log("[OED] Loaded and running!");
 });

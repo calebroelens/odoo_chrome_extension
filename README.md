@@ -2,6 +2,12 @@
 Odoo Chrome Extension / Extended Debugging
 
 
+## Compatible version
+* 15
+* 16
+* 17
+* saas
+
 # snippets
 
 Odoo 17 talks using __WOWL_DEBUG__
