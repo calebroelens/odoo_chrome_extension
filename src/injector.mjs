@@ -1,5 +1,7 @@
 import {OdooDetection} from "./odoo/detect.mjs";
 import {OdooNotification} from "./odoo/services/notification.mjs";
+import {OdooApps} from "./odoo/services/apps.mjs";
+import {DebugApps} from "./odoo/dom/debug_apps.mjs";
 
 window.RUN_MODE = "DISABLED";
 let INITIAL_URL = window.location.href;
@@ -7,7 +9,8 @@ let INITIAL_URL = window.location.href;
 console.log("[OED] Injector loading");
 
 let RUN_MODE_FULL = () => {
-
+    // Load menus
+    DebugApps.loadAppMenus();
 }
 
 let RUN_MODE_WEBSITE = () => {
@@ -30,6 +33,13 @@ let UrlObserver = () => {
 
 }
 
+let appMenuObserver = () => {
+    if(OdooApps.isHomeMenu()){
+        DebugApps.loadAppMenus();
+    }
+    setTimeout(appMenuObserver, 100);
+}
+
 const RUN_MODES = {
     "FULL": RUN_MODE_FULL,
     "WEBSITE": RUN_MODE_WEBSITE,
@@ -38,6 +48,9 @@ const RUN_MODES = {
 
 let runPopStateInjection = () => {
     /* When popstate gets triggered re-inject some elements into the DOM */
+    if(window.RUN_MODE === "FULL"){
+
+    }
 }
 
 let init = () => {
@@ -61,7 +74,9 @@ let init = () => {
             // Trigger re-injection of some scripts!
             runPopStateInjection();
         });
+        // Start observers
         setTimeout(UrlObserver, 100);
+        setTimeout(appMenuObserver, 100);
     }
     // Run the mode
     RUN_MODES[window.RUN_MODE]();
@@ -69,6 +84,6 @@ let init = () => {
 
 // No need for DOMContentLoaded! -> Already emitted
 // Add a delay -> Odoo core takes to long to load on V17...
-setTimeout(init, 1500);
+setTimeout(init, 100);
 
 console.log("[OED] Injector load complete");

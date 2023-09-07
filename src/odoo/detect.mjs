@@ -12,7 +12,24 @@ let isOdooLoggedIn = () => {
     return Object.hasOwn(window.odoo, '__WOWL_DEBUG__');
 }
 
+let detectDebugMode = () => {
+    if(isOdooAvailable()){
+        if(odoo.debug === "1"){
+            return "DEBUG";
+        }
+        else if(odoo.debug === "assets"){
+            return "ASSETS"
+        } else {
+            return null;
+        }
+    }
+    else{
+        return null;
+    }
+}
+
 export const OdooDetection = {
     isOdooAvailable: isOdooAvailable,
-    isOdooLoggedIn: isOdooLoggedIn
+    isOdooLoggedIn: isOdooLoggedIn,
+    detectDebugMode: detectDebugMode
 }

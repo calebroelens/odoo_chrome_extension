@@ -1,0 +1,5 @@
+/*
+    Extension on the click everywhere test.
+    Allows selection of app
+
+ */

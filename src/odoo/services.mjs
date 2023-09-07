@@ -1,6 +1,7 @@
 // This cache will save the keys of the service in the script, to avoid repeated fetching of the service functions (costly copy operations)
 const __DEBUG__service_cache = {};
 const __WOWL_DEBUG__service_cache = {};
+const __WOWL_DEBUG__root_service_cache = {};
 
 let getOdooService = (...service_names) => {
     // Legacy JS services
@@ -36,8 +37,22 @@ let getOdooWOWL_service = (service_name) => {
     return null;
 }
 
+let getOdooWOWL_root_service = (service_name) => {
+    // Starting from Odoo 15 till 17, Odoo Owl was introduced
+    if(Object.hasOwn(__WOWL_DEBUG__root_service_cache, service_name)){
+        return __WOWL_DEBUG__root_service_cache[service_name];
+    }
+    // Check the window object
+    if(Object.hasOwn(odoo.__WOWL_DEBUG__.root, service_name)){
+        const service = odoo.__WOWL_DEBUG__.root[service_name];
+        __WOWL_DEBUG__root_service_cache[service_name] = service;
+        return service;
+    }
+    return null;
+}
 
 export const OdooServices = {
     getOdooService: getOdooService,
-    getOdooWOWL_service: getOdooWOWL_service
+    getOdooWOWL_service: getOdooWOWL_service,
+    getOdooWOWL_root_service: getOdooWOWL_root_service
 }
