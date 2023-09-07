@@ -76,7 +76,9 @@ let init = () => {
         });
         // Start observers
         setTimeout(UrlObserver, 100);
-        setTimeout(appMenuObserver, 100);
+        if(window.RUN_MODE === "FULL"){
+            setTimeout(appMenuObserver, 100);
+        }
     }
     // Run the mode
     RUN_MODES[window.RUN_MODE]();
