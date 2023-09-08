@@ -8,6 +8,8 @@ let INITIAL_URL = window.location.href;
 
 console.log("[OED] Injector loading");
 
+
+let getCurrentElement = null;
 let RUN_MODE_FULL = () => {
     // Load menus
     DebugApps.loadAppMenus();
@@ -67,8 +69,11 @@ let init = () => {
     if(window.RUN_MODE !== "DISABLED"){
         document.dispatchEvent(new CustomEvent("show_context_menu", {detail: window.RUN_MODE}));
         document.addEventListener("test_show_notification", (ev) => {
-            OdooNotification.showNotification(ev.detail, {});
+            OdooNotification.showNotification(ev.detail.message, {});
         });
+        document.addEventListener('contextmenu', (ev) => {
+            console.log(ev.target);
+        })
         OdooNotification.showNotification(
             `Odoo Extended Debugging loaded in ${window.RUN_MODE} run mode.`,
             {'title': 'OED Loaded', 'type': 'success'}

@@ -43,7 +43,8 @@ let startInjection = () => {
 let setupMessageActionListeners = () => {
     chrome.runtime.onMessage.addListener((data, sender, sendResponse) => {
         if(data.action === "context_menu_click"){
-            document.dispatchEvent(new CustomEvent("test_show_notification", {detail: "Test Context Menu click"}))
+            console.log(data.clickData);
+            document.dispatchEvent(new CustomEvent("test_show_notification", {detail: {"message": "test"}}))
         }
     });
 }

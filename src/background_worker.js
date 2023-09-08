@@ -17,7 +17,7 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
         if(!contextMenuId){
             chrome.contextMenus.create({
                 'title': 'Odoo Inspect',
-                'contexts': ['page'],
+                'contexts': ['all'],
                 'id': 'odoo_inspect'
             });
             contextMenuId = "odoo_inspect";
