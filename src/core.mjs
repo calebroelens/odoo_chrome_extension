@@ -1,3 +1,5 @@
+import {OdooNotification} from "./odoo/services/notification.mjs";
+
 const INJECT_SCRIPTS = [];
 
 const INJECT_MODULES = ["src/injector.mjs"];
@@ -38,27 +40,25 @@ let startInjection = () => {
     console.log("[OED] End of injection.");
 }
 
-let setupMessageActionListeners = (function_map) => {
+let setupMessageActionListeners = () => {
     chrome.runtime.onMessage.addListener((data, sender, sendResponse) => {
-
+        if(data.action === "context_menu_click"){
+            document.dispatchEvent(new CustomEvent("test_show_notification", {detail: "Test Context Menu click"}))
+        }
     });
 }
 
-let addEventListener = (event_name, callback) => {
-    document.addEventListener(event_name, (ev) => {
-        callback(ev.detail);
+let setupEventListeners = () => {
+    document.addEventListener("show_context_menu", (ev) => {
+        chrome.runtime.sendMessage({request: "show_context_menu"});
     });
-}
-
-let addAsyncEventListener = async (event_name, callback) => {
-    document.addEventListener(event_name, async (ev) => {
-        await callback(ev.detail);
-    })
 }
 
 export async function run(){
     // Load script and inject
     startInjection();
+    setupEventListeners();
+    setupMessageActionListeners();
 }
 
 

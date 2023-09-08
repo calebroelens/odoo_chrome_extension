@@ -65,6 +65,10 @@ let init = () => {
     console.log(`[OED] Run mode: ${window.RUN_MODE}`);
     // Set core listeners
     if(window.RUN_MODE !== "DISABLED"){
+        document.dispatchEvent(new CustomEvent("show_context_menu", {detail: window.RUN_MODE}));
+        document.addEventListener("test_show_notification", (ev) => {
+            OdooNotification.showNotification(ev.detail, {});
+        });
         OdooNotification.showNotification(
             `Odoo Extended Debugging loaded in ${window.RUN_MODE} run mode.`,
             {'title': 'OED Loaded', 'type': 'success'}
