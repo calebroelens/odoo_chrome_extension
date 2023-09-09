@@ -35,10 +35,10 @@ let checkForAppIconInstance = (contextEventData, clickData) => {
 
 let renderAppIconInspector = async (contextEventDataResponse) => {
     let templates = AppInspectorTemplates[OdooVersion.getOdooVersion()[0]]["dialog"];
-    let dialog = OdooDialog.renderCustomDialog("test", "<h1>test</h1>", templates);
+    let dialog = OdooDialog.renderCustomDialog("Custom dialog", "Hacked custom template", templates);
     OdooDialog.showDialog(dialog.class, dialog.props);
-    let dialog_2 = OdooDialog.renderCustomDialog("test", "<h1>test</h1>", templates);
-    OdooDialog.showDialog(dialog.class, dialog.props);
+    let dialog_2 = OdooDialog.createDialog("Default dialog", "This is a body");
+    OdooDialog.showDialog(dialog_2.class, dialog_2.props);
 }
 
 export const ContextMenuDetect_Apps = {

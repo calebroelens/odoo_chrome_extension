@@ -24,9 +24,19 @@ let createConfirmationDialog = (title, body, confirm_callback, cancel_callback) 
 let renderCustomDialog = (title, body, templates) => {
     let module = OdooOwl.getOwlComponent("@web/core/confirmation_dialog/confirmation_dialog");
     let alertDialog = module.AlertDialog;
+
+    class CustomAlertDialog extends alertDialog {
+        setup(){
+            super.setup();
+        }
+    }
+    CustomAlertDialog.props = Object.assign(Object.create(alertDialog.props), {
+        contentClass: { type: String, optional: true },
+    });
+
     for(let template_function of Object.keys(templates)){
         Object.defineProperty(
-            alertDialog,
+            CustomAlertDialog,
             template_function,
             {
                 value: OdooOwl.renderXmlTemplate(templates[template_function]()),
@@ -35,10 +45,10 @@ let renderCustomDialog = (title, body, templates) => {
         );
     }
     return {
-        class: alertDialog,
+        class: CustomAlertDialog,
         props: {
-            title: "Test",
-            body: "Body"
+            title: title,
+            body: body
         }
     }
 }
