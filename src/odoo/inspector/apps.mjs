@@ -30,7 +30,7 @@ let _s_callback = () => {}
 let _f_callback = () => {}
 
 let renderAppIconInspector = async (contextEventDataResponse) => {
-    let dialog = OdooDialog.createConfirmationDialog("test", "<h1>test</h1>", _s_callback, _f_callback);
+    let dialog = OdooDialog.customDialogTest("test", "<h1>test</h1>");
     OdooDialog.showDialog(dialog.class, dialog.props);
 }
 
