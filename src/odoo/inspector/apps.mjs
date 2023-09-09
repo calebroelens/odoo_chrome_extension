@@ -3,6 +3,7 @@ import {OdooOwl} from "../owl/owl.mjs";
 import {OdooNotification} from "../services/notification.mjs";
 import {AppInspectorTemplates} from "./templates/apps.mjs";
 import {OdooVersion} from "../version.mjs";
+import {OdooApps} from "../services/apps.mjs";
 
 let checkForAppIconInstance = (contextEventData, clickData) => {
     // Clicked on the image
@@ -25,8 +26,9 @@ let checkForAppIconInstance = (contextEventData, clickData) => {
                 'data': {
                     'xml_id': parent.dataset.menuXmlid,
                     'href': parent.href,
-                    'name': parent.children.item(1).innerText
-                }
+                    'name': parent.children.item(1).innerText,
+                },
+                'odoo_record': OdooApps.getAppDetails(parent.dataset.menuXmlid)
             }
         }
     }
@@ -35,6 +37,7 @@ let checkForAppIconInstance = (contextEventData, clickData) => {
 
 let renderAppIconInspector = async (contextEventDataResponse) => {
     let templates = AppInspectorTemplates[OdooVersion.getOdooVersion()[0]]["dialog"];
+    console.log(contextEventDataResponse);
     let dialog = OdooDialog.renderCustomDialog(
         "Inspect: App",
         "",

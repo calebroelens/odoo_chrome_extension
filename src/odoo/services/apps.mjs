@@ -18,12 +18,29 @@ let getAllOdooMenuItems = () => {
 }
 
 let isHomeMenu = () => {
-    return OdooServices.getOdooWOWL_root_service("hm").hasHomeMenu;
+    let service = OdooServices.getOdooWOWL_root_service("hm");
+    if(service){
+        return service.hasHomeMenu;
+    } else {
+        return false;
+    }
+
+}
+
+let getAppDetails = (xml_id) => {
+    let apps = getAllOdooMenuItems();
+    for(let app of apps){
+        if(app.xmlid === xml_id){
+            return app;
+        }
+    }
+    return {}
 }
 
 export const OdooApps = {
     getOdooCurrentApp: getOdooCurrentApp,
     getAllOdooMenuItems: getAllOdooMenuItems,
+    getAppDetails: getAppDetails,
     getOdooInstalledAppIcons: getOdooInstalledAppIcons,
     isHomeMenu: isHomeMenu
 }
