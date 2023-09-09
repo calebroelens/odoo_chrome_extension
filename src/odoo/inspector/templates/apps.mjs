@@ -35,9 +35,6 @@ let generateTemplate_V16 = () => {
     </Dialog>`;
 }
 
-
-
-
 export const AppInspectorTemplates = {
     15: {
         dialog: {

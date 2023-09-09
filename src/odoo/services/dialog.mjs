@@ -2,7 +2,6 @@
 import {OdooServices} from "../services.mjs";
 import {OdooOwl} from "../owl/owl.mjs";
 import {OdooVersion} from "../version.mjs";
-import {AppInspectorTemplates} from "../inspector/templates/apps.mjs";
 
 
 let showDialog = (dialog, properties) => {
@@ -22,12 +21,18 @@ let createConfirmationDialog = (title, body, confirm_callback, cancel_callback) 
     }
 }
 
-let customDialogTest = (title, body) => {
+let renderCustomDialog = (title, body, templates) => {
     let module = OdooOwl.getOwlComponent("@web/core/confirmation_dialog/confirmation_dialog");
     let alertDialog = module.AlertDialog;
-    let templates = AppInspectorTemplates[OdooVersion.getOdooVersion()[0]]["dialog"];
     for(let template_function of Object.keys(templates)){
-        Object.defineProperty(alertDialog, template_function, {value: OdooOwl.renderXmlTemplate(templates[template_function]())});
+        Object.defineProperty(
+            alertDialog,
+            template_function,
+            {
+                value: OdooOwl.renderXmlTemplate(templates[template_function]()),
+                writable: true,
+            }
+        );
     }
     return {
         class: alertDialog,
@@ -55,5 +60,5 @@ export const OdooDialog = {
     createConfirmationDialog: createConfirmationDialog,
     createDialog: createDialog,
     showDialog: showDialog,
-    customDialogTest: customDialogTest
+    renderCustomDialog: renderCustomDialog
 }
