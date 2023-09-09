@@ -18,7 +18,9 @@ let clickEverywhereByXmlId = async (xml_id) => {
         // V17 / preview V16.5
         if(odoo_version[1] > 1){
             let clickbot = OdooOwl.getOwlComponent("@web/webclient/clickbot/clickbot_loader");
-            clickbot.startClickEverywhere(xml_id, false);
+            let app_details = OdooApps.getAppDetails(xml_id);
+            OdooServices.getOdooWOWL_service("menu").setCurrentMenu(app_details.id);
+            clickbot.startClickEverywhere(xml_id);
         }
         else {
             let clickbot_loader = OdooOwl.getOwlComponent("@web/core/assets");
