@@ -3,6 +3,7 @@ import {OdooNotification} from "./odoo/services/notification.mjs";
 import {OdooApps} from "./odoo/services/apps.mjs";
 import {DebugApps} from "./odoo/dom/debug_apps.mjs";
 import {ContextMenuDetect} from "./odoo/inspector/context_menu_detect_instance.mjs";
+import {Odoo_ClickEverywhere} from "./odoo/debug/click_everywhere.mjs";
 
 window.RUN_MODE = "DISABLED";
 let INITIAL_URL = window.location.href;
@@ -79,6 +80,22 @@ let registerContextMenuListener = () => {
     })
 }
 
+let registerClickEverywhereTestListener = () => {
+    document.addEventListener("odoo_debug_click_everywhere_xmlid", (ev) => {
+        let details = OdooApps.getAppDetails(ev.detail);
+        // Setup home menu button
+        Odoo_ClickEverywhere.clickEverywhereByXmlId(ev.detail);
+
+    })
+}
+
+let registerListeners = () => {
+    registerTestNotificationListener();
+    registerContextClickListener();
+    registerContextMenuListener();
+    registerClickEverywhereTestListener();
+}
+
 let init = () => {
     /* Always run code */
     if(OdooDetection.isOdooAvailable() && OdooDetection.isOdooLoggedIn()){
@@ -93,9 +110,7 @@ let init = () => {
     if(window.RUN_MODE !== "DISABLED"){
         // Start context menu
         initContextMenu();
-        registerTestNotificationListener();
-        registerContextClickListener();
-        registerContextMenuListener();
+        registerListeners();
         OdooNotification.showNotification(
             `Odoo Extended Debugging loaded in ${window.RUN_MODE} run mode.`,
             {'title': 'OED Loaded', 'type': 'success'}

@@ -1,4 +1,5 @@
 import {OdooNotification} from "./odoo/services/notification.mjs";
+import {Odoo_ClickEverywhere} from "./odoo/debug/click_everywhere.mjs";
 
 const INJECT_SCRIPTS = [];
 
@@ -54,6 +55,7 @@ let setupEventListeners = () => {
         chrome.runtime.sendMessage({request: "show_context_menu"});
     });
 }
+
 
 export async function run(){
     // Load script and inject

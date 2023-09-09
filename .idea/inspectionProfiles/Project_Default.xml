@@ -4,7 +4,7 @@
     <inspection_tool class="HtmlUnknownAttribute" enabled="true" level="WARNING" enabled_by_default="true">
       <option name="myValues">
         <value>
-          <list size="8">
+          <list size="9">
             <item index="0" class="java.lang.String" itemvalue="t-att-class" />
             <item index="1" class="java.lang.String" itemvalue="t-if" />
             <item index="2" class="java.lang.String" itemvalue="t-out" />
@@ -13,6 +13,7 @@
             <item index="5" class="java.lang.String" itemvalue="t-on-click" />
             <item index="6" class="java.lang.String" itemvalue="t-esc" />
             <item index="7" class="java.lang.String" itemvalue="t-attf-href" />
+            <item index="8" class="java.lang.String" itemvalue="t-attf-on-click" />
           </list>
         </value>
       </option>

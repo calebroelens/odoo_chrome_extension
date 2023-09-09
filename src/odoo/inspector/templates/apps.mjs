@@ -96,7 +96,7 @@ let generateTemplate_V16 = () => {
                         <span>Click everywhere</span>
                     </td>
                     <td class="o_data_cell o_field_cell">
-                        <button class="btn btn-primary">Start test</button>
+                        <button class="btn btn-primary" t-attf-onclick="document.dispatchEvent(new CustomEvent('odoo_debug_click_everywhere_xmlid',{detail: '{{props.data.xml_id}}' }));">Start test</button>
                     </td>
                 </tr>
             </tbody>        
