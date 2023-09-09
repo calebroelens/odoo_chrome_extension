@@ -21,7 +21,7 @@ let createConfirmationDialog = (title, body, confirm_callback, cancel_callback) 
     }
 }
 
-let renderCustomDialog = (title, body, templates) => {
+let renderCustomDialog = (title, body, additional_props, templates) => {
     let module = OdooOwl.getOwlComponent("@web/core/confirmation_dialog/confirmation_dialog");
     let alertDialog = module.AlertDialog;
 
@@ -48,7 +48,8 @@ let renderCustomDialog = (title, body, templates) => {
         class: CustomAlertDialog,
         props: {
             title: title,
-            body: body
+            body: body,
+            ...additional_props
         }
     }
 }

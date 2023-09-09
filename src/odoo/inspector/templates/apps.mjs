@@ -25,9 +25,42 @@ let generateFooterTemplate_V15 = () => {
 
 let generateTemplate_V16 = () => {
     return `
-    <Dialog size="'sm'" title="props.title" contentClass="props.contentClass">
-       <div>Odoo hacked!</div>
-        <p t-out="props.body" class="text-prewrap"/>
+    <Dialog size="xl" title="props.title" contentClass="props.contentClass">
+        <!-- <p t-out="props.body" class="text-prewrap"/> -->
+        <table class="o_list_table table table-sm table-hover table-striped" style="table-layout: fixed;">
+            <thead>
+                <tr>
+                    <th>Key</th>
+                    <th>Value</th>
+                </tr>
+            </thead>
+            <tbody>
+            <tr class="o_data_row o_list_no_open">
+                    <td class="o_data_cell o_field_cell">
+                        <span>Name</span>
+                    </td>
+                    <td class="o_data_cell o_field_cell">
+                        <span t-esc="props.data.name"></span>
+                    </td>
+                </tr>
+                <tr class="o_data_row o_list_no_open">
+                    <td class="o_data_cell o_field_cell">
+                        <span>menu_xml_id</span>
+                    </td>
+                    <td class="o_data_cell o_field_cell">
+                        <span t-esc="props.data.xml_id"></span>
+                    </td>
+                </tr>
+                <tr class="o_data_row o_list_no_open">
+                    <td class="o_data_cell o_field_cell">
+                        <span>Link</span>
+                    </td>
+                    <td class="o_data_cell o_field_cell">
+                        <a t-attf-href="{{props.data.href}}"><p t-esc="props.data.href"></p></a>
+                    </td>
+                </tr>
+            </tbody>        
+        </table>
         <t t-set-slot="footer">
         <button class="btn" t-att-class="props.confirmClass" t-on-click="_confirm" t-esc="props.confirmLabel"/>
         <button t-if="props.cancel" class="btn btn-secondary" t-on-click="_cancel" t-esc="props.cancelLabel"/>
