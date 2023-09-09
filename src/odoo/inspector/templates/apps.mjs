@@ -62,7 +62,7 @@ let generateTemplate_V16 = () => {
             </tbody>        
         </table>
         <t t-set-slot="footer">
-        <button class="btn" t-att-class="props.confirmClass" t-on-click="_confirm" t-esc="props.confirmLabel"/>
+        <button class="btn btn-primary" t-att-class="props.confirmClass" t-on-click="_confirm" t-esc="props.confirmLabel"/>
         <button t-if="props.cancel" class="btn btn-secondary" t-on-click="_cancel" t-esc="props.cancelLabel"/>
       </t>
     </Dialog>`;
