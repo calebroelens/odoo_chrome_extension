@@ -2,9 +2,11 @@ import {OdooDetection} from "./odoo/detect.mjs";
 import {OdooNotification} from "./odoo/services/notification.mjs";
 import {OdooApps} from "./odoo/services/apps.mjs";
 import {DebugApps} from "./odoo/dom/debug_apps.mjs";
+import {ContextMenuDetect} from "./odoo/inspector/context_menu_detect_instance.mjs";
 
 window.RUN_MODE = "DISABLED";
 let INITIAL_URL = window.location.href;
+let CONTEXT_DATA = null;
 
 console.log("[OED] Injector loading");
 
@@ -55,6 +57,28 @@ let runPopStateInjection = () => {
     }
 }
 
+let initContextMenu = () => {
+    document.dispatchEvent(new CustomEvent("show_context_menu", {detail: window.RUN_MODE}));
+}
+
+let registerTestNotificationListener = () => {
+    document.addEventListener("test_show_notification", (ev) => {
+        OdooNotification.showNotification(ev.detail.message, {});
+    });
+}
+
+let registerContextClickListener = () => {
+    document.addEventListener('contextmenu', (ev) => {
+       CONTEXT_DATA = ev;
+    })
+}
+
+let registerContextMenuListener = () => {
+    document.addEventListener("context_menu_click_inject", (ev) => {
+        ContextMenuDetect.contextMenuTargetExtractor(CONTEXT_DATA, ev.detail);
+    })
+}
+
 let init = () => {
     /* Always run code */
     if(OdooDetection.isOdooAvailable() && OdooDetection.isOdooLoggedIn()){
@@ -67,13 +91,11 @@ let init = () => {
     console.log(`[OED] Run mode: ${window.RUN_MODE}`);
     // Set core listeners
     if(window.RUN_MODE !== "DISABLED"){
-        document.dispatchEvent(new CustomEvent("show_context_menu", {detail: window.RUN_MODE}));
-        document.addEventListener("test_show_notification", (ev) => {
-            OdooNotification.showNotification(ev.detail.message, {});
-        });
-        document.addEventListener('contextmenu', (ev) => {
-            console.log(ev.target);
-        })
+        // Start context menu
+        initContextMenu();
+        registerTestNotificationListener();
+        registerContextClickListener();
+        registerContextMenuListener();
         OdooNotification.showNotification(
             `Odoo Extended Debugging loaded in ${window.RUN_MODE} run mode.`,
             {'title': 'OED Loaded', 'type': 'success'}
@@ -95,6 +117,6 @@ let init = () => {
 
 // No need for DOMContentLoaded! -> Already emitted
 // Add a delay -> Odoo core takes to long to load on V17...
-setTimeout(init, 100);
+setTimeout(init, 1500);
 
 console.log("[OED] Injector load complete");

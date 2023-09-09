@@ -6,3 +6,7 @@
 
 
 const CLICK_EVERYWHERE_LOCATION = ["web/static/src/webclient/clickbot/clickbot.js"];
+
+let loadModules = () => {
+    odoo.loader.modules.get('@web/webclient/clickbot/clickbot_loader');
+}
