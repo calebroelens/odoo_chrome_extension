@@ -32,6 +32,8 @@ let _f_callback = () => {}
 let renderAppIconInspector = async (contextEventDataResponse) => {
     let dialog = OdooDialog.customDialogTest("test", "<h1>test</h1>");
     OdooDialog.showDialog(dialog.class, dialog.props);
+    let dialog_2 = OdooDialog.createDialog("test", "<h1>test</h1>");
+    OdooDialog.showDialog(dialog.class, dialog.props);
 }
 
 export const ContextMenuDetect_Apps = {

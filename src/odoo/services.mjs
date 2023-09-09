@@ -11,11 +11,12 @@ let getOdooService = (...service_names) => {
         return __DEBUG__service_cache[service_names_set]
     }
     // Check the window object
-    const service = Array.from(service_names_set).find(
+    const found_service = Array.from(service_names_set).find(
         service_name => Object.hasOwn(odoo.__DEBUG__.services, service_name)
     );
-    if(service){
-        const service = odoo.__DEBUG__.services[service_name];
+    console.log(found_service);
+    if(found_service){
+        const service = odoo.__DEBUG__.services[found_service];
         // Add to the cache
         __DEBUG__service_cache[service_names_set] = service;
         return service;
