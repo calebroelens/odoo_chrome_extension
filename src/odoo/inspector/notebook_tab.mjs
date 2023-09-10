@@ -1,4 +1,7 @@
 import {OdooNotification} from "../services/notification.mjs";
+import {NotebookTabInspectorTemplates} from "./templates/notebook_tab.mjs";
+import {OdooVersion} from "../version.mjs";
+import {OdooDialog} from "../services/dialog.mjs";
 
 
 let checkForNotebookTab = (contextEventData, clickData) => {
@@ -7,10 +10,10 @@ let checkForNotebookTab = (contextEventData, clickData) => {
         return;
     }
     let target = contextEventData.target;
+    console.log(target);
     if(
         target.className && target.className.includes("nav-link")
         && target.role && target.role === "tab"
-        && target.href && target.href.includes('notebook_page')
     ){
         return {
             type: 'notebook_tab',
@@ -25,7 +28,16 @@ let checkForNotebookTab = (contextEventData, clickData) => {
 }
 
 let renderNotebookTabInspector = (contextEventDataResponse) => {
-
+    let templates = NotebookTabInspectorTemplates[OdooVersion.getOdooVersion()[0]]["dialog"];
+    let dialog = OdooDialog.renderCustomDialog(
+        "Inspect: Notebook Tab",
+        "",
+        {
+            ...contextEventDataResponse
+        },
+        templates
+    );
+    OdooDialog.showDialog(dialog.class, dialog.props);
 }
 
 

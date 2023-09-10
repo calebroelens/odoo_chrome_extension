@@ -4,6 +4,7 @@ import {OdooApps} from "./odoo/services/apps.mjs";
 import {DebugApps} from "./odoo/dom/debug_apps.mjs";
 import {ContextMenuDetect} from "./odoo/inspector/context_menu_detect_instance.mjs";
 import {Odoo_ClickEverywhere} from "./odoo/debug/click_everywhere.mjs";
+import {OdooDialog} from "./odoo/services/dialog.mjs";
 
 window.RUN_MODE = "DISABLED";
 let INITIAL_URL = window.location.href;
@@ -86,7 +87,16 @@ let registerClickEverywhereTestListener = () => {
         // Setup home menu button
         Odoo_ClickEverywhere.clickEverywhereByXmlId(ev.detail);
 
-    })
+    });
+}
+
+let registerChromeResourcesEvent = () => {
+    document.addEventListener("odoo_debug_chrome_suspend", (ev) => {
+        let dialog = OdooDialog.createDialog(
+            ev.detail
+        );
+        OdooDialog.showDialog(dialog);
+    });
 }
 
 let registerListeners = () => {
@@ -94,6 +104,7 @@ let registerListeners = () => {
     registerContextClickListener();
     registerContextMenuListener();
     registerClickEverywhereTestListener();
+    registerChromeResourcesEvent();
 }
 
 let init = () => {

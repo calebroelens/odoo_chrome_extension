@@ -1,4 +1,3 @@
-let registerKeepAliveTabIds = [];
 
 chrome.commands.onCommand.addListener((command) => {
    chrome.tabs.query({'active': true, currentWindow: true}, (tabs) => {
@@ -18,7 +17,7 @@ let odoo_debug_contextMenuId = null;
 
 chrome.runtime.onSuspend.addListener((ev) => {
         chrome.tabs.query({'active': true, currentWindow: true}, (tabs) => {
-            chrome.tabs.sendMessage(tabs[0].id, {"action": "keep_alive"});
+            chrome.tabs.sendMessage(tabs[0].id, {"action": "suspend"});
         });
     }
 )
@@ -40,26 +39,4 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
             odoo_debug_contextMenuId = null;
         }
     }
-    else if(msg.request === "keep_alive_request"){
-        console.log("[OED] Running in background.");
-        if(sender.tab){
-            registerKeepAliveTabIds.push(
-                sender.tab.id
-            );
-        }
-    }
 });
-
-setInterval(() => {
-    chrome.tabs.query({'active': true, currentWindow: true}, (tabs) => {
-        for(let tab_id of registerKeepAliveTabIds){
-            try{
-                chrome.tabs.sendMessage(tab_id, {"action": "keep_alive"});
-                console.log(`[OED] Keep alive sent to ${tab_id}`);
-            } catch (e) {
-                console.log(`[OED] Could not keep ${tab_id} alive.`);
-            }
-        }
-    });
-
-}, 5000);

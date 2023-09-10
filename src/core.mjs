@@ -7,12 +7,13 @@ const INJECT_MODULES = ["src/injector.mjs"];
 
 const INJECT_CLASS = "odoo_extended_debugger_js";
 
-let __injectScript = (url, type="script") => {
+let __injectScript = (url, type = "script") => {
     /* Load a script in any page and hack the DOM window */
     let injector_tag = document.createElement("script");
     injector_tag.src = chrome.runtime.getURL(url);
-    injector_tag.onload = () => {};
-    if(type !== "script"){
+    injector_tag.onload = () => {
+    };
+    if (type !== "script") {
         injector_tag.type = type;
     }
     (document.head || document.documentElement).appendChild(injector_tag);
@@ -32,10 +33,10 @@ let injectScript = (url) => {
 
 let startInjection = () => {
     console.log("[OED] Started injection.");
-    for(let script_url of INJECT_SCRIPTS){
+    for (let script_url of INJECT_SCRIPTS) {
         injectScript(script_url);
     }
-    for(let module_url of INJECT_MODULES){
+    for (let module_url of INJECT_MODULES) {
         injectModule(module_url);
     }
     console.log("[OED] End of injection.");
@@ -43,12 +44,9 @@ let startInjection = () => {
 
 let setupMessageActionListeners = () => {
     chrome.runtime.onMessage.addListener((data, sender, sendResponse) => {
-        if(data.action === "context_menu_click"){
+        if (data.action === "context_menu_click") {
             // Pass to injector.mjs
             document.dispatchEvent(new CustomEvent("context_menu_click_inject", {detail: data.clickData}));
-        }
-        if(data.action === "keep_alive"){
-            chrome.runtime.sendMessage({request: "keep_alive"});
         }
     });
 }
@@ -59,18 +57,33 @@ let setupEventListeners = () => {
     });
 }
 
-let registerKeepAlive = () => {
-    chrome.runtime.sendMessage({request: "keep_alive_request"});
+let listenForSuspensionChromeResources = () => {
+    chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
+        if (msg.action === "suspend") {
+            document.dispatchEvent(
+                new CustomEvent("odoo_debug_chrome_suspend",
+                    {
+                        detail:
+                            {
+                                title: "Chrome Resource Suspend",
+                                body: "To save resources, Chrome has suspended the script due to inactivity. Reload the page" +
+                                    "to re-enable the debugger"
+
+                            }
+                    }
+                )
+            );
+        }
+    });
 }
 
-
-export async function run(){
+export async function run() {
     // Load script and inject
     startInjection();
     setupEventListeners();
     setupMessageActionListeners();
 
-    registerKeepAlive();
+    listenForSuspensionChromeResources();
 }
 
 
