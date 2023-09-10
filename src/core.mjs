@@ -47,6 +47,9 @@ let setupMessageActionListeners = () => {
             // Pass to injector.mjs
             document.dispatchEvent(new CustomEvent("context_menu_click_inject", {detail: data.clickData}));
         }
+        if(data.action === "keep_alive"){
+            chrome.runtime.sendMessage({request: "keep_alive"});
+        }
     });
 }
 

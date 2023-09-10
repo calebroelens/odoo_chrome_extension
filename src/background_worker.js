@@ -14,7 +14,14 @@ chrome.contextMenus.onClicked.addListener((clickData, tab) => {
 
 let odoo_debug_contextMenuId = null;
 
+chrome.runtime.onSuspend.addListener((ev) => {
+        chrome.tabs.query({'active': true, currentWindow: true}, (tabs) => {
+            chrome.tabs.sendMessage(tabs[0].id, {"action": "keep_alive"});
+        });
+    }
+)
 chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
+    console.log(odoo_debug_contextMenuId);
     if(msg.request === "show_context_menu"){
         if(!odoo_debug_contextMenuId){
             chrome.contextMenus.create({
@@ -30,5 +37,14 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
             chrome.contextMenus.remove(odoo_debug_contextMenuId);
             odoo_debug_contextMenuId = null;
         }
+    }
+    else if(msg.request === "keep_alive"){
+        setInterval(() => {
+
+            chrome.tabs.query({'active': true, currentWindow: true}, (tabs) => {
+                chrome.tabs.sendMessage(tabs[0].id, {"action": "keep_alive"});
+            });
+
+        }, 5000);
     }
 });
