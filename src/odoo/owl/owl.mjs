@@ -21,7 +21,7 @@ let getOwlLoaderModules = () => {
 
 let renderXmlTemplate = (xml) => {
     let odoo_version = OdooVersion.getOdooVersion();
-    if(odoo_version[0] === 16){
+    if([16, 'saas~16'].includes(odoo_version[0])){
         return window.owl.xml`${xml}`;
     } else {
         return window.owl.tags.xml`${xml}`;

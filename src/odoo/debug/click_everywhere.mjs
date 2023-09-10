@@ -14,9 +14,9 @@ const CLICK_EVERYWHERE_LOCATION = ["web/static/src/webclient/clickbot/clickbot.j
 
 let clickEverywhereByXmlId = async (xml_id) => {
     let odoo_version = OdooVersion.getOdooVersion();
-    if(odoo_version[0] === 16){
+    if([16, 'saas~16'].includes(odoo_version[0])){
         // V17 / preview V16.5
-        if(odoo_version[1] > 1){
+        if(odoo_version[1] > 4){
             let clickbot = OdooOwl.getOwlComponent("@web/webclient/clickbot/clickbot_loader");
             let app_details = OdooApps.getAppDetails(xml_id);
             OdooServices.getOdooWOWL_service("menu").setCurrentMenu(app_details.id);
