@@ -40,7 +40,9 @@ let renderAppIconInspector = async (contextEventDataResponse) => {
     let dialog = OdooDialog.renderCustomDialog(
         "Inspect: App",
         "",
-        {...contextEventDataResponse},
+        {
+            ...contextEventDataResponse
+        },
         templates
     );
     OdooDialog.showDialog(dialog.class, dialog.props);

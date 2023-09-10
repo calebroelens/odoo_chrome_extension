@@ -34,6 +34,8 @@ let renderCustomDialog = (title, body, additional_props, templates) => {
         contentClass: { type: String, optional: true },
     });
 
+    CustomAlertDialog.size = "modal-xl";
+
     for(let template_function of Object.keys(templates)){
         Object.defineProperty(
             CustomAlertDialog,
