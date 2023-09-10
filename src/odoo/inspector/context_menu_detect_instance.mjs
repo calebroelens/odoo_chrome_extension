@@ -1,8 +1,10 @@
 import {ContextMenuDetect_Apps} from "./apps.mjs";
 import {OdooNotification} from "../services/notification.mjs";
+import {ContextMenuDetect_NotebookTab} from "./notebook_tab.mjs";
 
 const EXTRACTORS = [
-    ContextMenuDetect_Apps.checkForAppIconInstance
+    ContextMenuDetect_Apps.checkForAppIconInstance,
+    ContextMenuDetect_NotebookTab.checkForNotebookTab
 ];
 
 let contextMenuTargetExtractor = async (contextEventData, clickData) => {
@@ -20,9 +22,15 @@ let contextMenuTargetExtractor = async (contextEventData, clickData) => {
     }
     else {
         OdooNotification.showNotification(`Detected type ${response.type}. Rendering details...`, {'type': 'success'});
-        await ContextMenuDetect_Apps.renderAppIconInspector(response);
+        switch(response.type){
+            case "app":
+                ContextMenuDetect_Apps.renderAppIconInspector(response);
+                break;
+            case "notebook_tab":
+                ContextMenuDetect_NotebookTab.renderNotebookTabInspector(response);
+                break;
+        }
     }
-
 }
 
 

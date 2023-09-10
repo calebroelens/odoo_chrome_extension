@@ -59,12 +59,18 @@ let setupEventListeners = () => {
     });
 }
 
+let registerKeepAlive = () => {
+    chrome.runtime.sendMessage({request: "keep_alive_request"});
+}
+
 
 export async function run(){
     // Load script and inject
     startInjection();
     setupEventListeners();
     setupMessageActionListeners();
+
+    registerKeepAlive();
 }
 
 

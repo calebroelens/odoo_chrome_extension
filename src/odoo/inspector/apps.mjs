@@ -35,7 +35,7 @@ let checkForAppIconInstance = (contextEventData, clickData) => {
     return null;
 }
 
-let renderAppIconInspector = async (contextEventDataResponse) => {
+let renderAppIconInspector = (contextEventDataResponse) => {
     let templates = AppInspectorTemplates[OdooVersion.getOdooVersion()[0]]["dialog"];
     let dialog = OdooDialog.renderCustomDialog(
         "Inspect: App",
