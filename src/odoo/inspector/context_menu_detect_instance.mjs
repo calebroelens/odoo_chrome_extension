@@ -1,10 +1,12 @@
 import {ContextMenuDetect_Apps} from "./apps.mjs";
 import {OdooNotification} from "../services/notification.mjs";
 import {ContextMenuDetect_NotebookTab} from "./notebook_tab.mjs";
+import {ContextMenuDetect_Field} from "./fields.mjs";
 
 const EXTRACTORS = [
     ContextMenuDetect_Apps.checkForAppIconInstance,
-    ContextMenuDetect_NotebookTab.checkForNotebookTab
+    ContextMenuDetect_NotebookTab.checkForNotebookTab,
+    ContextMenuDetect_Field.checkForField
 ];
 
 let contextMenuTargetExtractor = async (contextEventData, clickData) => {
@@ -29,6 +31,8 @@ let contextMenuTargetExtractor = async (contextEventData, clickData) => {
             case "notebook_tab":
                 ContextMenuDetect_NotebookTab.renderNotebookTabInspector(response);
                 break;
+            case "field":
+                ContextMenuDetect_Field.renderFieldInspector(response);
         }
     }
 }

@@ -10,7 +10,6 @@ let checkForNotebookTab = (contextEventData, clickData) => {
         return;
     }
     let target = contextEventData.target;
-    console.log(target);
     if(
         target.className && target.className.includes("nav-link")
         && target.role && target.role === "tab"
