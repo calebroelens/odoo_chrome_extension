@@ -20,14 +20,14 @@ let clickEverywhereByXmlId = async (xml_id) => {
             let clickbot = OdooOwl.getOwlComponent("@web/webclient/clickbot/clickbot_loader");
             let app_details = OdooApps.getAppDetails(xml_id);
             OdooServices.getOdooWOWL_service("menu").setCurrentMenu(app_details.id);
-            clickbot.startClickEverywhere(xml_id);
+            clickbot.startClickEverywhere(xml_id, false);
         }
         else {
             let clickbot_loader = OdooOwl.getOwlComponent("@web/core/assets");
             await clickbot_loader.loadJS("web/static/src/webclient/clickbot/clickbot.js").then(() => {
                 let app_details = OdooApps.getAppDetails(xml_id);
                 OdooServices.getOdooWOWL_service("menu").setCurrentMenu(app_details.id);
-                window.clickEverywhere(xml_id);
+                window.clickEverywhere(xml_id, false);
 
             });
         }
