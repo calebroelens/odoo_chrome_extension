@@ -148,7 +148,7 @@ let generateTemplate_V16 = () => {
                     </td>
                     <td class="o_data_cell o_field_cell">
                         <ul>
-                            <t t-foreach="props.odoo_record.childrenTree" t-as="menu" t-key="id">
+                            <t t-foreach="props.odoo_record.childrenTree" t-as="menu" t-key="menu.id">
                                 <li><span t-esc="menu.name"></span>: <span t-esc="menu.xmlid"></span></li>
                             </t>
                         </ul>

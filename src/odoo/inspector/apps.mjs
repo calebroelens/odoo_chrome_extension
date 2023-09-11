@@ -37,6 +37,7 @@ let checkForAppIconInstance = (contextEventData, clickData) => {
 
 let renderAppIconInspector = (contextEventDataResponse) => {
     let templates = AppInspectorTemplates[OdooVersion.getOdooVersion()[0]]["dialog"];
+    console.log(contextEventDataResponse);
     let dialog = OdooDialog.renderCustomDialog(
         "Inspect: App",
         "",
@@ -45,6 +46,7 @@ let renderAppIconInspector = (contextEventDataResponse) => {
         },
         templates
     );
+    console.log(dialog);
     OdooDialog.showDialog(dialog.class, dialog.props);
 }
 
