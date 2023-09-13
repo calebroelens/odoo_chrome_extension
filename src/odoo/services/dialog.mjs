@@ -36,6 +36,19 @@ let renderCustomDialog = (title, body, additional_props, templates) => {
 
     CustomAlertDialog.size = "modal-xl";
 
+    // if(CustomAlertDialog.defaultProps){
+    //     CustomAlertDialog.defaultProps.data = {optional: true};
+    //     CustomAlertDialog.defaultProps.type = null;
+    //     CustomAlertDialog.defaultProps.odoo_record = null;
+    //     CustomAlertDialog.defaultProps.final_target = null;
+    // }
+    if(CustomAlertDialog.props){
+        CustomAlertDialog.props.data = {optional: true};
+        CustomAlertDialog.props.type = {optional: true};
+        CustomAlertDialog.props.odoo_record = {optional: true};
+        CustomAlertDialog.props.final_target = {optional: true};
+    }
+
     for(let template_function of Object.keys(templates)){
         Object.defineProperty(
             CustomAlertDialog,
