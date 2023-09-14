@@ -5,6 +5,8 @@ import {DebugApps} from "./odoo/dom/debug_apps.mjs";
 import {ContextMenuDetect} from "./odoo/inspector/context_menu_detect_instance.mjs";
 import {Odoo_ClickEverywhere} from "./odoo/debug/click_everywhere.mjs";
 import {OdooDialog} from "./odoo/services/dialog.mjs";
+import {OdooRpc} from "./odoo/services/rpc.js";
+import {RecordInspector} from "./odoo/debug/record_inspector.mjs";
 
 window.RUN_MODE = "DISABLED";
 let INITIAL_URL = window.location.href;
@@ -61,6 +63,7 @@ let runPopStateInjection = () => {
 
 let initContextMenu = () => {
     document.dispatchEvent(new CustomEvent("show_context_menu", {detail: window.RUN_MODE}));
+    document.dispatchEvent(new CustomEvent("show_context_menu_record", {detail: window.RUN_MODE}));
 }
 
 let registerTestNotificationListener = () => {
@@ -78,6 +81,9 @@ let registerContextClickListener = () => {
 let registerContextMenuListener = () => {
     document.addEventListener("context_menu_click_inject", (ev) => {
         ContextMenuDetect.contextMenuTargetExtractor(CONTEXT_DATA, ev.detail);
+    })
+    document.addEventListener("context_menu_click_inject_inspect_record", async (ev) => {
+        await RecordInspector.inspectRecord();
     })
 }
 
@@ -107,10 +113,11 @@ let registerListeners = () => {
     registerChromeResourcesEvent();
 }
 
-let init = () => {
+let init = async () => {
     /* Always run code */
     if(OdooDetection.isOdooAvailable() && OdooDetection.isOdooLoggedIn()){
         window.RUN_MODE = "FULL";
+        // await OdooRpc.testRpc();
     } else if(OdooDetection.isOdooAvailable() && !OdooDetection.isOdooLoggedIn()){
         window.RUN_MODE = "WEBSITE"
     } else {

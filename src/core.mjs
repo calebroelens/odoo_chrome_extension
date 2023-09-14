@@ -48,12 +48,19 @@ let setupMessageActionListeners = () => {
             // Pass to injector.mjs
             document.dispatchEvent(new CustomEvent("context_menu_click_inject", {detail: data.clickData}));
         }
+        if(data.action === "context_menu_click_inspect_record"){
+            // Pass to injector.mjs
+            document.dispatchEvent(new CustomEvent("context_menu_click_inject_inspect_record", {detail: data.clickData}));
+        }
     });
 }
 
 let setupEventListeners = () => {
     document.addEventListener("show_context_menu", (ev) => {
         chrome.runtime.sendMessage({request: "show_context_menu"});
+    });
+    document.addEventListener("show_context_menu_record", (ev) => {
+        chrome.runtime.sendMessage({request: "show_context_menu_record"});
     });
 }
 

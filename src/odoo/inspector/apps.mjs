@@ -46,7 +46,6 @@ let renderAppIconInspector = (contextEventDataResponse) => {
         },
         templates
     );
-    console.log(dialog);
     OdooDialog.showDialog(dialog.class, dialog.props);
 }
 

@@ -1,4 +1,7 @@
 import {OdooNotification} from "../services/notification.mjs";
+import {FieldInspectorTemplates} from "./templates/fields.mjs";
+import {OdooVersion} from "../version.mjs";
+import {OdooDialog} from "../services/dialog.mjs";
 
 
 let checkForField = (contextEventData, clickData) => {
@@ -92,12 +95,17 @@ let checkForField = (contextEventData, clickData) => {
     return null;
 }
 
-let outerTagIsTd = (td_tag) => {
-
-}
-
 let renderFieldInspector = (contextEventDataResponse) => {
-    console.log(contextEventDataResponse);
+    let templates = FieldInspectorTemplates[OdooVersion.getOdooVersion()[0]]["dialog"];
+    let dialog = OdooDialog.renderCustomDialog(
+        "Inspect: Field",
+        "",
+        {
+            ...contextEventDataResponse
+        },
+        templates
+    )
+    OdooDialog.showDialog(dialog.class, dialog.props);
 }
 
 export const ContextMenuDetect_Field = {
