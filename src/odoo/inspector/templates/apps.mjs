@@ -182,6 +182,11 @@ let generateTemplate_V16 = () => {
 }
 
 export const AppInspectorTemplates = {
+    17: {
+        dialog: {
+            template: generateTemplate_V16
+        }
+    },
     15: {
         dialog: {
             bodyTemplate: generateBodyTemplate_V15,

@@ -97,6 +97,11 @@ export const NotebookTabInspectorTemplates = {
             template: generateTemplate_V16
         }
     },
+    17: {
+        dialog: {
+            template: generateTemplate_V16
+        }
+    },
     'saas~16': {
         dialog: {
             template: generateTemplate_V16

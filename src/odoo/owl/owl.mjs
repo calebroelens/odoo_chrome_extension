@@ -21,7 +21,7 @@ let getOwlLoaderModules = () => {
 
 let renderXmlTemplate = (xml) => {
     let odoo_version = OdooVersion.getOdooVersion();
-    if([16, 'saas~16'].includes(odoo_version[0])){
+    if([16, 'saas~16', 17].includes(odoo_version[0])){
         return window.owl.xml`${xml}`;
     } else {
         return window.owl.tags.xml`${xml}`;
@@ -34,6 +34,9 @@ let getOwlComponent = (moduleName) => {
     console.log(`[OED] Loading owl component for ${odoo_version[0]}.${odoo_version[1]}`);
     if(odoo_version[1] > 1 && odoo_version[0] === 16){
         // Use global module loader
+        let modules = getOwlLoaderModules();
+        return modules[moduleName];
+    } else if(odoo_version[0] === 17){
         let modules = getOwlLoaderModules();
         return modules[moduleName];
     }

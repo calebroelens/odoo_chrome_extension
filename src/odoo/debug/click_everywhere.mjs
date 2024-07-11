@@ -16,7 +16,7 @@ let clickEverywhereByXmlId = async (xml_id) => {
     let odoo_version = OdooVersion.getOdooVersion();
     if([16, 'saas~16'].includes(odoo_version[0])){
         // V17 / preview V16.5
-        if(odoo_version[1] > 4){
+        if(odoo_version[1] > 4 || odoo_version[0] === 17){
             let clickbot = OdooOwl.getOwlComponent("@web/webclient/clickbot/clickbot_loader");
             let app_details = OdooApps.getAppDetails(xml_id);
             OdooServices.getOdooWOWL_service("menu").setCurrentMenu(app_details.id);
